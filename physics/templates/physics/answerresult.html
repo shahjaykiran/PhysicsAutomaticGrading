@@ -1,0 +1,33 @@
+{%include "header.html"%}
+{% load staticfiles %}
+<h1 class="page-header" align="center">Answer Results</h1>
+<h3 class="page-header" align="center">Homework {{homework}} Problem {{problem}}</h3>
+<div>
+	<table border="2" style="width: 600px">
+		<thead>
+			<tr>
+				<th style="margin: auto; text-align: center;">Step</th>
+				<th style="margin: auto; text-align: center;">Answer</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for step, answer in steps_answers %}
+			<tr>
+				<td style="margin: auto; text-align: center;">{{step}}</td>
+				<td style="margin: auto; text-align: center;">{{answer}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+</div>
+</center>
+<p>&nbsp;</p>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

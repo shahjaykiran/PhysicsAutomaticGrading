@@ -1,0 +1,28 @@
+{%include "header.html"%}
+<h1 class="page-header" align="center">Summary</h1>
+<div style="background: white; width: 240px; height: 400px">
+	<img style="-webkit-user-select: none; width: 240px;"
+		src="http://{{hostname}}/serve/AMIfv954_bi3d7FKjv79Fu66GyyiZzD6z4MKZaFoC7_F5-MKAiQvXd2qal-OjUVCTRlnwM1cINc2YbHOe0kVNKfnX0LKy71G6lqWb7rC8UN52PtsMrX1yBoy4J8_m7f5AT0oKp-49r2TiX1OrpjVEggrgKXNovQOT9JJhvkhYymveVJgWrPF16g
+	"><br />
+	<div style='font-size:16px;float:left;'><b>{{header}}</b></div><br/>
+	<div>
+	<pre style='font-size:13px;float:left; text-align: left;'>{{content}}</pre>
+	</div>
+	
+	<div style="height: 138px">
+		{% if image_key is lengthCheck %} {% for image in image_key %} <img
+			style="-webkit-user-select: none; width: 100px;"
+			src="http://{{hostname}}/serve/{{image}}"><br /> {% endfor %}
+		{% endif %}
+	</div>
+</div>
+</div>
+</center>
+<p>&nbsp;</p>
+</main>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

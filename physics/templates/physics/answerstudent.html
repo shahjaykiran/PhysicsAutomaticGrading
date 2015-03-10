@@ -1,0 +1,25 @@
+{%include "header.html" %}
+{% load staticfiles %}
+<h1 class="page-header" align="center">Results</h1>
+						<p class="lead">Please enter Student ID to fetch the results.
+						</p>
+						<form action="/checkStudentAnswer" method="post">
+							<label>{{error}}</label><br /> <label for="userid">Student
+								ID:</label> <input class="input-lg" type="text" id="userid"
+								name="userid" size="20"> <br /> <label
+								for="homeworkNumber">HomeWork:</label> <input class="input-lg"
+								type="text" id="homework" name="homework" size="20"> <br />
+							<label for="questionNumber">Problem Number:</label> <input
+								class="input-lg" type="text" id="problem" name="problem"
+								size="20"> <br /> <input type="submit" value="SUBMIT" /><br />
+						</form>
+	</center>
+	<p>&nbsp;</p>
+	</main>
+
+	</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>

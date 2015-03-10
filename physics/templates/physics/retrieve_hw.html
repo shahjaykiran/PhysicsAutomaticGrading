@@ -1,0 +1,938 @@
+{%include "header.html"%}
+<head>
+	<title>Physics | Enter Question Hint</title>
+</head>
+
+{% load staticfiles %}
+<script src="{% static "js/keyboard.js"%}" type='text/javascript'></script>
+<script src="{% static "js/keyboard_ma.js"%}" type='text/javascript'></script>
+<script type="text/javascript">
+	var i=0;
+	function addOption()
+	{
+		i= i+1;
+		if(i<10)
+		{
+		var textbox = document.createElement('input');
+		textbox.type = 'text';
+		textbox.id='option'+i;
+		textbox.name='option'+i;
+		textbox.placeholder='Option '+i;
+		textbox.onmouseup='keepfocus()'
+		document.getElementById('HintOptions').appendChild(textbox);
+		}
+	}
+</script>
+
+<h1 class="page-header" align="center">Question Hint</h1>
+<!-- <div style='color:red;'>{{error}}</div> -->
+<h1 class="page-header" align="center">Question</h1>
+{% for ques in question %}
+	<p>
+	{{ques.0}}
+	<br><br>
+	<span style="font-size:16px">Notation:<br>{{ques.1}}</span>
+	<br><br>
+	<form method="POST" action="../../physics/submit_homework/">
+	{%csrf_token%}
+	<input type="hidden" name="StudentID" value=1234 >
+	<input type="hidden" name="Homework" value={{Homework}}>
+	<input type="hidden" name="Question" value={{Question}}>
+	{% for ques_part in ques.2 %}
+		<h3>
+		Part : {{ques_part.0}}
+		<br><br>
+		{{ques_part.1}}
+		{% for ques_hint in ques_part.2 %}
+			<h4>
+				Step : {{ques_hint.0}}
+				<br>
+				Question : {{ques_hint.1}}<br>
+				Explaination: <textarea id=EXPLAIN{{Homework}},{{Question}},{{ques_part.0}},{{ques_hint.0}} name=EXPLAIN{{Homework}},{{Question}},{{ques_part.0}},{{ques_hint.0}}></textarea><br>
+				Options : <br>
+				{% for opt in ques_hint.2%}
+
+				<input type="radio" name=ANSWER{{Homework}},{{Question}},{{ques_part.0}},{{ques_hint.0}} value={{opt.1}}>&nbsp&nbsp{{opt.0}}<br>
+				<br>
+
+				{% endfor %}
+				<input type="hidden" name=CORRECT{{Homework}},{{Question}},{{ques_part.0}},{{ques_hint.0}} value={{ques_hint.3}}>	
+			</h4>
+		{% endfor %}
+		</h3>
+	{% endfor%}
+	</p>
+{% endfor %}
+<input type="submit" value="Submit Answers">
+
+<p>&nbsp;</p>
+</form>
+		<div class='keyboard' id='keyboard'>
+		<div class='keyboard_holder'>
+			<div id='keyboard_math' class='keyboard_math_left'>
+				<input type='button' class='letter' value='+'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&minus;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&times;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&divide;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='='
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#177;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8800;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='('
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value=')'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#60;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#62;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8804;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8805;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8260;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8730;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8731;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8732;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8734;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8501;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#402;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8242;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8243;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8244;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8901;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#9001;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#9002;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8968;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8969;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8970;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8971;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8853;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8855;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8304;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#185;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#178;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#179;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8308;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8309;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8310;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8311;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8312;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8313;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8314;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8315;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8316;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8317;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8318;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8305;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8319;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8320;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8321;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8322;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8323;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8324;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8325;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8326;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8327;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8328;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8329;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8330;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8331;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8332;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8333;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8334;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8336;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8337;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8338;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7522;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7523;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7524;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7525;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8339;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7526;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7527;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7528;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7529;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#7530;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#188;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#189;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8531;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8531;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8532;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8533;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#x2156;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8535;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8536;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8537;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8538;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8539;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8540;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8541;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8542;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#956;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#963;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#967;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8721;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8720;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='x&#772;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='p&#770;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#176;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#181;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8242;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8242;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8240;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8706;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8710;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8711;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8747;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8748;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8749;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#10764;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8750;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8751;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8752;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8753;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#10769;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8754;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8755;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#945;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#946;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#947;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#948;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#949;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#950;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#951;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#952;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#953;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#954;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#955;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#956;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#957;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#958;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#959;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#960;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#961;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#962;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#964;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#965;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#966;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#967;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#968;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#969;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8472;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8465;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8476;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8477;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8450;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8469;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8473;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8474;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8484;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8704;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8705;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8707;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8708;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8709;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#172;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&tilde; '
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8743;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8744;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8891;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8892;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8893;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8745;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8746;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8712;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8713;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8714;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8715;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8716;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8717;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8726;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8834;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8835;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8836;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8837;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8838;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8839;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8840;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8841;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8842;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8843;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8900;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8771;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8772;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8844;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8845;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8846;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8912;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8913;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8914;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8915;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8896;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8897;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8898;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8899;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8910;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8911;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8853;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8855;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8854;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8856;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8946;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8947;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8948;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8949;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8950;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8951;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8952;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8953;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8954;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8955;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8956;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8957;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8958;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8959;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8735;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8736;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8737;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8738;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8739;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8740;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8741;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8742;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8894;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8895;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8869;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8866;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8867;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8868;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8756;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8757;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8733;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8718;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8800;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8773;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8776;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8777;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8764;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8801;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8802;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8803;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8802;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8806;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8807;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8808;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8809;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8810;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8811;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8812;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8813;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8814;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8815;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8816;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8817;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8818;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8819;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8820;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8821;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8822;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8823;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8824;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8825;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8769;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8770;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8771;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8772;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8774;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8775;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8777;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8778;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8779;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8780;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8723;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8724;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8727;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8728;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8729;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8733;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8758;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8759;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8760;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8761;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8762;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8763;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8764;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8765;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8766;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8767;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8768;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8781;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8782;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8783;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8784;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8785;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8786;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8787;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8788;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8789;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8790;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8791;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8792;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8793;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8794;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8795;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8796;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8797;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8798;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8799;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8826;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8827;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8828;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8829;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8830;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8831;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8832;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8833;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8847;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8848;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8849;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8850;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8851;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8852;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8857;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8858;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8859;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8860;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8861;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8862;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8863;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8864;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8874;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8870;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8871;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8872;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8873;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8874;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8875;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8876;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8877;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8878;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8879;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8880;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8881;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8882;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8883;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8884;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8885;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8886;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8887;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8888;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8889;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8890;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8900;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8902;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8903;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8904;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8905;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8906;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8907;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8908;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8909;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8916;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8917;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8918;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8919;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8920;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8921;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8922;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8923;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8924;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8925;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8926;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8927;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8928;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8929;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8930;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8931;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8932;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8933;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8934;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8935;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8936;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8937;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8938;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8939;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8940;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8941;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8942;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8943;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8944;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' /><input
+					type='button' class='letter' value='&#8945;'
+					onmousedown='manageChar(this)' onmouseup='keepfocus()' />
+					
+			</div>
+		</div>
+	</div>
+</form>
+</center>
+<p>&nbsp;</p>
+</main>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+<script src="{% static "js/keyboard.js"%}" type='text/javascript'></script>
+<script src="{% static "js/keyboard_ma.js"%}" type='text/javascript'></script>
+<script type="text/javascript">
+var element = null;
+document.body.addEventListener('focus', elementIs, true);
+function elementIs (e){
+    var target = e.target,targetTagName = target.tagName.toLowerCase();
+    /* Using a switch () rather than if/else if/else, for simplicity and
+       ease of extension to other focusable element-types, though adjust
+       to whichever technique you're more comfortable with:
+    */
+    switch (targetTagName){
+        case 'textarea':
+            if (target.name === 'content') {	
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }else if(target.name === 'notation') {
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }else if(target.name === 'explaination') {
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }
+            break;
+        case 'input':{
+        	element = target.name;
+        	keepfocus(element);
+        	console.log(target.name);
+        	get_focus(target.name);
+        }
+    }
+    console.log(target.name);
+    get_focus(target.name);
+    
+}
+
+function keepfocus(id){
+	document.getElementById(id).focus();
+}
+
+function convertVals(){
+	var cont = document.getElementById('content');
+	try {
+	cont.value = symbolsToEntities(cont.value);
+	}catch(err){
+		return false;
+	}
+	return true;
+}
+
+function symbolsToEntities(sText) {
+	var sNewText = "";
+	var iLen = sText.length;
+	for (i=0; i<iLen; i++) {
+		iCode = sText.charCodeAt(i);
+		sNewText += (iCode > 127? "&#" + iCode + ";": sText.charAt(i));
+	}
+	return sNewText;
+}
+
+</script>
+</html>

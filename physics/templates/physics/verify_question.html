@@ -1,0 +1,145 @@
+{%include "header.html"%}
+<head>
+	<title>Physics | Enter Question Hint</title>
+</head>
+
+{% load staticfiles %}
+<script src="{% static "js/keyboard.js"%}" type='text/javascript'></script>
+<script src="{% static "js/keyboard_ma.js"%}" type='text/javascript'></script>
+<script type="text/javascript">
+	var i=0;
+	function addOption()
+	{
+		i= i+1;
+		if(i<10)
+		{
+		var textbox = document.createElement('input');
+		textbox.type = 'text';
+		textbox.id='option'+i;
+		textbox.name='option'+i;
+		textbox.placeholder='Option '+i;
+		textbox.onmouseup='keepfocus()'
+		document.getElementById('HintOptions').appendChild(textbox);
+		}
+	}
+</script>
+
+<h1 class="page-header" align="center">Question Hint</h1>
+<!-- <div style='color:red;'>{{error}}</div> -->
+<h1 class="page-header" align="center">Question</h1>
+{% for ques in question %}
+	<p>
+	{{ques.0}}
+	<br><br>
+	<span style="font-size:16px">Notation:<br>{{ques.1}}</span>
+	<br><br>
+	<form method="POST" action="../../physics/submit_homework/">
+	{%csrf_token%}
+	<input type="hidden" name="StudentID" value=1234 >
+	<input type="hidden" name="Homework" value={{Homework}}>
+	<input type="hidden" name="Question" value={{Question}}>
+	{% for ques_part in ques.2 %}
+		<h3>
+		Part : {{ques_part.0}}
+		<br><br>
+		{{ques_part.1}}
+		{% for ques_hint in ques_part.2 %}
+			<h4>
+				Step : {{ques_hint.0}}
+				<br>
+				Question : {{ques_hint.1}}<br>
+				<br>
+				Options : <br>
+				{% for opt in ques_hint.2%}
+				&nbsp&nbsp{{opt.0}}<br>
+				<br>
+
+				{% endfor %}
+				<input type="hidden" name=CORRECT{{Homework}},{{Question}},{{ques_part.0}},{{ques_hint.0}} value={{ques_hint.3}}>	
+			</h4>
+		{% endfor %}
+		</h3>
+	{% endfor%}
+	</p>
+{% endfor %}
+<p>&nbsp;</p>
+</form>
+		
+</form>
+</center>
+<p>&nbsp;</p>
+</main>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+<script src="{% static "js/keyboard.js"%}" type='text/javascript'></script>
+<script src="{% static "js/keyboard_ma.js"%}" type='text/javascript'></script>
+<script type="text/javascript">
+var element = null;
+document.body.addEventListener('focus', elementIs, true);
+function elementIs (e){
+    var target = e.target,targetTagName = target.tagName.toLowerCase();
+    /* Using a switch () rather than if/else if/else, for simplicity and
+       ease of extension to other focusable element-types, though adjust
+       to whichever technique you're more comfortable with:
+    */
+    switch (targetTagName){
+        case 'textarea':
+            if (target.name === 'content') {	
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }else if(target.name === 'notation') {
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }else if(target.name === 'explaination') {
+            	// console.log(target.name);
+            	element = target.name;
+            	get_focus(target.name);
+            	// $(target.name).focus()
+            }
+            break;
+        case 'input':{
+        	element = target.name;
+        	keepfocus(element);
+        	console.log(target.name);
+        	get_focus(target.name);
+        }
+    }
+    console.log(target.name);
+    get_focus(target.name);
+    
+}
+
+function keepfocus(id){
+	document.getElementById(id).focus();
+}
+
+function convertVals(){
+	var cont = document.getElementById('content');
+	try {
+	cont.value = symbolsToEntities(cont.value);
+	}catch(err){
+		return false;
+	}
+	return true;
+}
+
+function symbolsToEntities(sText) {
+	var sNewText = "";
+	var iLen = sText.length;
+	for (i=0; i<iLen; i++) {
+		iCode = sText.charCodeAt(i);
+		sNewText += (iCode > 127? "&#" + iCode + ";": sText.charAt(i));
+	}
+	return sNewText;
+}
+
+</script>
+</html>

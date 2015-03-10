@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+{%include "header.html"%}
+    <head>
+
+        <meta charset="utf-8">
+        <title>Modern Physics</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- CSS -->
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=PT+Sans:400,700'>
+        <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700'>
+        <link rel="stylesheet" href="{% static "css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static "css/loginstyle.css">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="header">
+            <div class="container">
+                <div class="row">
+                    <div class="logo span4">
+                        <h1><a href="">Modern Physics </a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="register-container container">
+            <div class="row">
+                <div class="iphone span5">
+                    <img src="{% static "img/iphone.png"%}" alt="">
+                </div>
+                <div class="register span6">
+                    <form action="/adminLogin" method="post">
+                        <h2>Login</h2>
+                        <label for="error" class="red">{{error}}</label>
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="username/email...">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="password">
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Javascript -->
+        <script src="{% static "js/jquery-1.8.2.min.js"%}"></script>
+        <script src="{% static "js/bootstrap.min.js"%}"></script>
+        <script src="{% static "js/jquery.backstretch.min.js"%}"></script>
+        <script src="{% static "js/loginscripts.js"%}"></script>
+
+    </body>
+
+</html>
+

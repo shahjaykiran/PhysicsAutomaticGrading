@@ -1,0 +1,18 @@
+<html>
+<body>
+	<form action={{upload_url}} method="post" id="myform">
+		<input type="hidden" name="homework" value="{{homework}}" />
+		<input type="hidden" id="problem" name="problem" value="{{problem}}"/>
+		<input type="hidden" id="step" name="step" value="{{step}}"/>
+		<input type="hidden" id="content" name="content" value="{{content}}"/>
+		<input type="hidden" id="hint" name="hint" value="{{hint}}"/>
+		<input type="hidden" id="header" name="header" value="{{header}}"/>
+		<input type="hidden" id="image_key" name="image_key" value="{{image_key}}"/>
+	</form>
+</body>
+<script type="text/javascript">
+	window.onload = function(){
+		document.forms['myform'].submit()
+	}
+</script>
+</html>
