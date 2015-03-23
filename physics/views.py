@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from physics.models import Homework, Question, Question_Part, Question_Hint, Answers, Summary
+from django.db.models import Q
 import logging
 import sqlalchemy.pool as pool
 import PySQLPool
@@ -153,10 +154,29 @@ def verify_homework(request):
                     question_hints.append((hint['Question_Hint_Number'],hint['Question_Hint_Content'],hints,correct))
                 question_parts.append((part_no,part_content,question_hints))
                 question_hints = []
-            table.append((question_content,question_notation,question_parts))
+            table.append((question_content,question_notation,question_parts,q_no))
         print table
     return render_to_response("physics/verify_question.html", {'question':table,'Homework':hw_no,'Question':q_no}, context_instance=RequestContext(request))
 
+def modify_homework(request):
+    if request.method=="POST":
+        homework = request.POST.get("Homework")
+        question = request.POST.get("Question")
+        # print request.POST
+        for entry in request.POST:
+            if "Question:" in entry:
+                Question.objects.filter(Q(Question_HW_Number=homework),Q(Question_Number=question)).update(Question_Content=request.POST.get(entry))
+            elif "Notation:" in entry:
+                Question.objects.filter(Q(Question_HW_Number=homework),Q(Question_Number=question)).update(Question_Notation=request.POST.get(entry))
+            elif "Part:" in entry and "Step:" in entry:
+                rows = entry.split(',')
+                part = rows[0].split(':')[1]
+                step = rows[1].split(':')[1]
+                Question_Hint.objects.filter(Q(Question_Hint_HW_Number=homework),Q(Question_Hint_Q_Number=question),Q(Question_Hint_QP_Number=part),Q(Question_Hint_Number=step)).update(Question_Hint_Content=request.POST.get(entry))
+            elif "Part:" in entry:
+                part = entry.split(':')[1]
+                Question_Part.objects.filter(Q(Question_Part_HW_Number=homework),Q(Question_Part_Q_Number=question),Q(Question_Part_Number=part)).update(Question_Part_Content=request.POST.get(entry))
+    return render_to_response("physics/modify_question.html", {}, context_instance=RequestContext(request))
 
 def retrieve_summary(request):
     table=[]
